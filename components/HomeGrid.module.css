@@ -1,0 +1,101 @@
+.grid {
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 items per row */
+  width: max-content;
+  will-change: transform;
+}
+
+.content {
+  pointer-events: none;
+  display: grid;
+  width: max-content;
+  grid-template-columns: repeat(5, 1fr); /* 5 items per row */
+  gap: 10vw;
+  padding: 5vw; /* reproduce half of the gap around the division */
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  width: 25vw; /* moved here from .media — .tile is the direct grid item now */
+}
+
+.media {
+  position: relative;
+  width: 100%;
+  /* aspect-ratio intentionally not set here — it's applied inline per
+     tile in HomeGrid.tsx (see hashAspectRatio), so each image gets its
+     own varied but stable box instead of a uniform square. */
+  user-select: none;
+  pointer-events: auto; /* opt back in so images are clickable; events still bubble to the window listener for dragging */
+  cursor: pointer;
+}
+
+.caption {
+  margin-top: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-align: center;
+  color: var(--color-fg);
+  /* no pointer-events override — inherits "none" from .content, same as
+     the rest of the grid; captions are a label, not clickable */
+}
+
+.media img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  -webkit-user-drag: none;
+}
+
+/* Play affordance shown on hover/focus */
+.play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 15%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%) scale(0.85);
+  border-radius: 50%;
+  background: rgba(18, 18, 18, 0.55);
+  border: 1px solid rgba(241, 241, 241, 0.6);
+  opacity: 0;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  pointer-events: none;
+}
+
+.play::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 56%;
+  width: 0;
+  height: 0;
+  transform: translate(-50%, -50%);
+  border-style: solid;
+  border-width: 8px 0 8px 13px;
+  border-color: transparent transparent transparent #ffffff;
+}
+
+.media:hover .play {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+@media (max-width: 900px) {
+  .content {
+    gap: 20vw;
+    padding: 10vw;
+  }
+  .tile {
+    width: 50vw;
+  }
+}

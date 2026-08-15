@@ -1,0 +1,232 @@
+body {
+  background-color: #fdf8ee;
+  font-family: var(--font-mono);
+  color: #ff3c00;
+}
+.lightbox.is-open {
+  position: fixed;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+iframe {
+  height: 85vh;
+  width: calc(85vh * 9 / 16);
+  max-width: 90vw;
+}
+.lightbox__close {
+  display: none;
+}
+
+/* ==========================================================================
+   SITE NAV — four corners pinned to the viewport, not a bar.
+   Logo top-left; Music (home) top-right; About bottom-left; Contact bottom-right.
+   ========================================================================== */
+
+.site-nav {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  padding: 4px;
+}
+
+.site-nav a,
+.site-nav button {
+  padding: 2px 4px;
+  color: #ff3c00;
+  background: #fdf8ee;
+  opacity: 1;
+  pointer-events: auto;
+  margin-left: 4px;
+  margin-top: 4px;
+  border-radius: 2px;
+  border: solid 1px #ff3c00;
+  text-decoration: none;
+}
+
+.site-nav__logo {
+  top: var(--edge-pad);
+  left: var(--edge-pad);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1rem, 1.4vw, 1.25rem);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: inherit;
+}
+
+.site-nav__corner {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: inherit;
+  text-decoration: ;
+}
+.site-nav__corner:hover,
+.site-nav__corner[aria-current="page"] {
+  opacity: 1;
+}
+
+.site-nav__corner[aria-current="page"]::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: currentColor;
+}
+
+.site-nav__corner--music {
+  top: var(--edge-pad);
+  right: var(--edge-pad);
+  text-align: right;
+}
+.site-nav__corner--music[aria-current="page"]::after {
+  bottom: -4px;
+}
+
+.site-nav__corner--about {
+  bottom: var(--edge-pad);
+  left: var(--edge-pad);
+}
+.site-nav__corner--about[aria-current="page"]::after {
+  top: -4px;
+}
+
+.site-nav__corner--contact {
+  bottom: var(--edge-pad);
+  right: var(--edge-pad);
+  text-align: right;
+}
+.site-nav__corner--contact[aria-current="page"]::after {
+  top: -4px;
+}
+
+@media (max-width: 700px) {
+  .site-nav__logo,
+  .site-nav__corner {
+    font-size: 0.7rem;
+  }
+}
+
+/* ==========================================================================
+   ARTIST MODAL — deliberately a light "index card" against the dark site,
+   not themed to match. Triggered by the logo.
+   ========================================================================== */
+
+.modal-overlay {
+  position: absolute;
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+  border: solid 1px #ff3c00;
+  background-color: #fdf8ee;
+  border-radius: 4px;
+}
+
+.modal-overlay.is-open {
+  margin-top: 26px;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  width: min(92vw, 512px);
+}
+
+.modal__header {
+  display: flex;
+  align-items: stretch;
+  border-bottom: 1px solid #ff3c00;
+}
+
+.modal__title {
+  flex: 1;
+  padding: 0rem 1.5rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.modal__close {
+  width: 64px;
+  flex-shrink: 0;
+  border: none;
+  border-left: 1px solid #ff3c00;
+  background: transparent;
+  color: #ff3c00;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.modal__close:hover {
+  background: #000000;
+  color: #ffffff;
+}
+
+.modal__body {
+  padding: 1.5rem;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  border-bottom: 1px solid #ff3c00;
+  margin: 0px;
+}
+
+.modal__links {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.modal__links a {
+  padding: 1.2rem 0.75rem;
+  text-align: center;
+  font-size: 0.9rem;
+  border-right: 1px solid #ff3c00;
+  color: #ff3c00;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.modal__links a:last-child {
+  border-right: none;
+}
+
+.modal__links a:hover {
+  background: #ff3c00;
+  color: #ffffff;
+}
+
+@media (max-width: 500px) {
+  .modal__title {
+    font-size: 1.1rem;
+    padding: 1rem;
+  }
+  .modal__body {
+    padding: 1.25rem;
+    font-size: 0.9rem;
+  }
+  .modal__links a {
+    padding: 1rem 0.5rem;
+    font-size: 0.8rem;
+  }
+}
